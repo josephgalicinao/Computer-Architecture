@@ -137,6 +137,7 @@ u8 Processor::RunFor(u8 ticks)
 {
     u8 executed = 0;
 
+    // looping for however many ticks
     while (executed < ticks)
     {
         m_iCurrentClockCycles = 0;
@@ -175,6 +176,8 @@ u8 Processor::RunFor(u8 ticks)
             {
                 ServeInterrupt(interrupt);
                 interrupt_served = true;
+
+                // Wrote disassemble in the serve interrupt function
             }
             else // No interrupt?
             {
@@ -195,6 +198,9 @@ u8 Processor::RunFor(u8 ticks)
                     PC.Decrement();
                 }
 
+                // DISASSEMBLE HERE TOO?
+                Disassemble(PC.GetValue());
+
                 const u8* accurateOPcodes;
                 const u8* machineCycles;
                 OPCptr* opcodeTable;
@@ -208,6 +214,10 @@ u8 Processor::RunFor(u8 ticks)
 
                     opcode = m_pMemory->Read(PC.GetValue());
                     PC.Increment();
+
+                    // need to disassemble when incrementing?
+                    Disassemble(PC.GetValue());
+
 
                     if (m_bSkipPCBug)
                     {
@@ -358,6 +368,7 @@ void Processor::ServeInterrupt(Interrupts interrupt)
             m_iInterruptDelayCycles= 0;
             m_pMemory->Load(0xFF0F, if_reg & 0xFE);
             PC.SetValue(0x0040); // does the jump here ig
+            //Disassemble(0x0040);
             UpdateGameShark();
             break;
         case LCDSTAT_Interrupt:
@@ -379,6 +390,9 @@ void Processor::ServeInterrupt(Interrupts interrupt)
         case None_Interrupt:
             break;
     }
+    
+    // PC now updated, so 
+    Disassemble(PC.GetValue());
 }
 
 void Processor::UpdateTimers(u8 ticks)
@@ -501,6 +515,7 @@ bool Processor::Disassemble(u16 address)
     int bank = 0;
     bool rom = false;
 
+
     if ((address & 0xC000) == 0x0000)
     {
         bank = m_pMemory->GetCurrentRule()->GetCurrentRomBank0Index();
@@ -520,6 +535,13 @@ bool Processor::Disassemble(u16 address)
         map = memoryMap;
         rom = false;
     }
+
+    // Write offset to PC to see what's here before and after?
+    // std::ofstream disfile("disAddr.csv", std::ios::app);
+    // disfile << "0x" << std::uppercase << std::hex << address << ",";
+    // disfile << "0x" << std::uppercase << std::hex << offset << "\n";
+    // //disfile << "\"" << map[offset]->name << "\"" << ",";
+    // disfile.close();
 
     if (!IsValidPointer(map[offset]))
     {
@@ -627,7 +649,7 @@ bool Processor::Disassemble(u16 address)
         // EDITED CODE
 
         if (IsValidPointer(map[offset])) {
-            std::ofstream file("disassembled2.csv", std::ios::app);
+            std::ofstream file("disassembled3.csv", std::ios::app);
             file << "0x" << std::uppercase << std::hex << offset << ",";
             file << "\"" << map[offset]->name << "\"" << ",";
             file << map[offset]->jump << ",";

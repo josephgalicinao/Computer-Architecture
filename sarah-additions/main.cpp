@@ -32,9 +32,13 @@ int main(int argc, char* argv[])
     // EDITED CODE 
     std::ofstream myFile("assembly.csv");
     std::ofstream pcFile("pcTrace.csv");
+    // std::ofstream addrFileInt("disAddr.csv");
+    // std::ofstream addrFile("disAddr.csv", std::ios::app);
+    // addrFile << "initAddr" << "," << "offsetAddr";
+    // addrFile.close();
 
-    std::ofstream disFile("disassembled2.csv");
-    std::ofstream file("disassembled2.csv", std::ios::app);
+    std::ofstream disFile("disassembled3.csv");
+    std::ofstream file("disassembled3.csv", std::ios::app);
     file << "PC" << ",";
     file << "\"" << "Inst Name" << "\"" << ",";
     file << "Jump?" << ",";
