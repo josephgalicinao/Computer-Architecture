@@ -1,13 +1,21 @@
 import csv
+import sys
+
+# get args
+if len(sys.argv) < 2:
+    print("Usage: python(3) always_taken.py <csv_file>")
+    exit()
+
+csv_file = sys.argv[1]
 
 # Load the CSV file
-with open("branch_trace.csv", newline='') as file:
+with open(csv_file, mode='r') as file:
     reader = csv.DictReader(file)
     total = 0
     correct = 0
 
     for row in reader:
-        actual = int(row["Taken"])
+        actual = int(row["Jump?"])
         prediction = 1  # Always Not Taken
         total += 1
         if prediction == actual:

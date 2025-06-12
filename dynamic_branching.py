@@ -1,6 +1,8 @@
 import csv
+import sys
 
-NUM_GHR_BITS = 16
+GHR_OPTIONS = [4, 8, 16, 32, 64]
+NUM_GHR_BITS = 4
 STRONGLY_TAKEN = 0b11
 WEAKLY_TAKEN = 0b10
 STRONGLY_NOT_TAKEN = 0b00
@@ -27,26 +29,43 @@ def update_ghr(ghr, actual):
     mask = (1 << NUM_GHR_BITS) - 1
     return ((ghr << 1) | actual) & mask
 
+
+# get args
+if len(sys.argv) < 2:
+    print("Usage: python(3) dynamic_branching.py <csv_file>")
+    exit()
+
+in_filename = sys.argv[1]
+
 # Load the CSV file
-with open("branch_trace.csv", newline='') as file:
-    reader = csv.DictReader(file)
-    total = 0
-    correct = 0
 
-    ghr = 0
+for num_ghr_bits in GHR_OPTIONS:
+    NUM_GHR_BITS = num_ghr_bits
+    pht = [WEAKLY_NOT_TAKEN] * (2 ** NUM_GHR_BITS)
 
-    for row in reader:
-        prediction = get_prediction(ghr)
-        actual = int(row["Taken"])
-        
-        update_pht(is_taken=actual, index=ghr)
-        ghr = update_ghr(ghr, actual)
+    with open(in_filename, mode='r') as file:
+        reader = csv.DictReader(file)
 
-        if prediction == actual:       
-            correct += 1
-        total += 1
+        total = 0
+        correct = 0
 
-accuracy = correct / total * 100
-print(f"Total branches: {total}")
-print(f"Correct predictions: {correct}")
-print(f"Accuracy: {accuracy:.2f}%")
+        ghr = 0
+
+        for row in reader:
+            prediction = get_prediction(ghr)
+            actual = int(row["Jump?"])
+            
+            update_pht(is_taken=actual, index=ghr)
+            ghr = update_ghr(ghr, actual)
+
+            if prediction == actual:       
+                correct += 1
+            total += 1
+
+        accuracy = correct / total * 100
+        print(f"Num GHR Bits: {num_ghr_bits}")
+        print(f"Total branches: {total}")
+        print(f"Correct predictions: {correct}")
+        print(f"Accuracy: {accuracy:.2f}%")
+
+    file.close()
