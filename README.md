@@ -9,4 +9,5 @@
 3. Run ```python(3) jump_limiter.py disassembled3.csv```
     - disassembled3.csv will generate where the gearboy executable is (ex. ```Gearboy/platforms/linux```)
     - Edit the paths of ```jump_limiter.py``` and ```disassembled3.csv``` to where they actually are bc I probs won't update this :)
+4. A new file called ```disassembled3_jump.csv``` should be created.
 
