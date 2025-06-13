@@ -1,0 +1,100 @@
+GHR bits: 4	Num Perceptrons: 4
+Total branches: 617923
+Correct predictions: 617406
+Accuracy: 99.92%
+GHR bits: 4	Num Perceptrons: 8
+Total branches: 617923
+Correct predictions: 617691
+Accuracy: 99.96%
+GHR bits: 4	Num Perceptrons: 16
+Total branches: 617923
+Correct predictions: 617817
+Accuracy: 99.98%
+GHR bits: 4	Num Perceptrons: 32
+Total branches: 617923
+Correct predictions: 617893
+Accuracy: 100.00%
+GHR bits: 4	Num Perceptrons: 64
+Total branches: 617923
+Correct predictions: 617914
+Accuracy: 100.00%
+GHR bits: 8	Num Perceptrons: 4
+Total branches: 617923
+Correct predictions: 617403
+Accuracy: 99.92%
+GHR bits: 8	Num Perceptrons: 8
+Total branches: 617923
+Correct predictions: 617685
+Accuracy: 99.96%
+GHR bits: 8	Num Perceptrons: 16
+Total branches: 617923
+Correct predictions: 617814
+Accuracy: 99.98%
+GHR bits: 8	Num Perceptrons: 32
+Total branches: 617923
+Correct predictions: 617885
+Accuracy: 99.99%
+GHR bits: 8	Num Perceptrons: 64
+Total branches: 617923
+Correct predictions: 617897
+Accuracy: 100.00%
+GHR bits: 16	Num Perceptrons: 4
+Total branches: 617923
+Correct predictions: 617400
+Accuracy: 99.92%
+GHR bits: 16	Num Perceptrons: 8
+Total branches: 617923
+Correct predictions: 617681
+Accuracy: 99.96%
+GHR bits: 16	Num Perceptrons: 16
+Total branches: 617923
+Correct predictions: 617807
+Accuracy: 99.98%
+GHR bits: 16	Num Perceptrons: 32
+Total branches: 617923
+Correct predictions: 617871
+Accuracy: 99.99%
+GHR bits: 16	Num Perceptrons: 64
+Total branches: 617923
+Correct predictions: 617882
+Accuracy: 99.99%
+GHR bits: 32	Num Perceptrons: 4
+Total branches: 617923
+Correct predictions: 617395
+Accuracy: 99.91%
+GHR bits: 32	Num Perceptrons: 8
+Total branches: 617923
+Correct predictions: 617674
+Accuracy: 99.96%
+GHR bits: 32	Num Perceptrons: 16
+Total branches: 617923
+Correct predictions: 617780
+Accuracy: 99.98%
+GHR bits: 32	Num Perceptrons: 32
+Total branches: 617923
+Correct predictions: 617840
+Accuracy: 99.99%
+GHR bits: 32	Num Perceptrons: 64
+Total branches: 617923
+Correct predictions: 617834
+Accuracy: 99.99%
+GHR bits: 64	Num Perceptrons: 4
+Total branches: 617923
+Correct predictions: 617380
+Accuracy: 99.91%
+GHR bits: 64	Num Perceptrons: 8
+Total branches: 617923
+Correct predictions: 617641
+Accuracy: 99.95%
+GHR bits: 64	Num Perceptrons: 16
+Total branches: 617923
+Correct predictions: 617722
+Accuracy: 99.97%
+GHR bits: 64	Num Perceptrons: 32
+Total branches: 617923
+Correct predictions: 617773
+Accuracy: 99.98%
+GHR bits: 64	Num Perceptrons: 64
+Total branches: 617923
+Correct predictions: 617787
+Accuracy: 99.98%

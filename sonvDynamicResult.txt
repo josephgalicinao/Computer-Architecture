@@ -1,0 +1,12 @@
+Num GHR Bits: 4
+Total branches: 617923
+Correct predictions: 524910
+Accuracy: 84.95%
+Num GHR Bits: 8
+Total branches: 617923
+Correct predictions: 616119
+Accuracy: 99.71%
+Num GHR Bits: 16
+Total branches: 617923
+Correct predictions: 615911
+Accuracy: 99.67%

@@ -1,5 +1,7 @@
 import csv
+import sys
 
+BIT_OPTIONS = [4, 8, 16, 32, 64]
 NUM_GHR_BITS = 32
 NUM_PERCEPTRONS = 64
 THETA = 1.93 * NUM_GHR_BITS + 14
@@ -37,33 +39,49 @@ def update_ghr(ghr, actual):
     mask = (1 << NUM_GHR_BITS) - 1
     return ((ghr << 1) | actual) & mask
 
-# Load the CSV file
-with open("branch_trace.csv", newline='') as file:
-    reader = csv.DictReader(file)
-    total = 0
-    correct = 0
+if len(sys.argv) < 2:
+    print("Usage: python(3) perceptron.py <csv_file>")
+    exit()
 
-    ghr = 0 # Replace with the branch address
-    
-    for row in reader:
-        # print(perceptron_table)
-        index = int(row["BranchAddress"], 16) % NUM_PERCEPTRONS
-        y = calculate_output(index, ghr)
-        prediction = 1 if y >= 0 else 0
-        actual = int(row["Taken"])
-     
-        if prediction != actual or abs(y) < THETA: 
-            if actual == 0: 
-                update_weights(NOT_TAKEN, index, ghr)
-            else:
-                update_weights(TAKEN, index, ghr)
-        if actual == prediction:    
-            correct += 1
+in_filename = sys.argv[1]
 
-        ghr = update_ghr(ghr, actual)
-        total += 1
+for num_ghr_bits in BIT_OPTIONS:
+    NUM_GHR_BITS = num_ghr_bits
+    THETA = 1.93 * NUM_GHR_BITS + 14
 
-accuracy = correct / total * 100
-print(f"Total branches: {total}")
-print(f"Correct predictions: {correct}")
-print(f"Accuracy: {accuracy:.2f}%")
+    for num_perceptrons in BIT_OPTIONS:
+        NUM_PERCEPTRONS = num_perceptrons
+        perceptron_table = [[0 for _ in range(NUM_GHR_BITS + 1)] for _ in range(NUM_PERCEPTRONS)]
+
+
+        # Load the CSV file
+        with open(in_filename, mode='r') as file:
+            reader = csv.DictReader(file)
+            total = 0
+            correct = 0
+
+            ghr = 0 # Replace with the branch address
+            
+            for row in reader:
+                # print(perceptron_table)
+                index = int(row["Jump Addr"], 16) % NUM_PERCEPTRONS
+                y = calculate_output(index, ghr)
+                prediction = 1 if y >= 0 else 0
+                actual = int(row["Jump?"])
+            
+                if prediction != actual or abs(y) < THETA: 
+                    if actual == 0: 
+                        update_weights(NOT_TAKEN, index, ghr)
+                    else:
+                        update_weights(TAKEN, index, ghr)
+                if actual == prediction:    
+                    correct += 1
+
+                ghr = update_ghr(ghr, actual)
+                total += 1
+
+        accuracy = correct / total * 100
+        print(f"GHR bits: {num_ghr_bits}\tNum Perceptrons: {num_perceptrons}")
+        print(f"Total branches: {total}")
+        print(f"Correct predictions: {correct}")
+        print(f"Accuracy: {accuracy:.2f}%")
